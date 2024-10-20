@@ -40,4 +40,4 @@ export const Categories: React.FC<CategoriesPropsType> = ({className}) => {
         </div>
     );
 };
-3
+
