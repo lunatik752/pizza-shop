@@ -2,7 +2,7 @@
 
 import React, {ChangeEvent, useState} from 'react';
 import {FilterCheckbox, FilterCheckboxPropsType} from "@/components/shared/FilterCheckbox";
-import {Input} from "@/components/ui";
+import { Input, Skeleton } from "@/components/ui";
 
 type CheckboxFiltersGroupPropsType = {
     title: string
@@ -12,6 +12,7 @@ type CheckboxFiltersGroupPropsType = {
     searchInputPlaceholder?: string
     onClickCheckbox?: (id: string) => void
     defaultValue?: string[]
+    loading?: boolean
     selected?: Set<string>
     className?: string
     name?: string
@@ -25,6 +26,7 @@ export const CheckboxFiltersGroup: React.FC<CheckboxFiltersGroupPropsType> = (
         limit = 3,
         searchInputPlaceholder = 'Поиск...',
         className,
+        loading,
         onClickCheckbox,
         selected,
         name,
@@ -41,6 +43,19 @@ export const CheckboxFiltersGroup: React.FC<CheckboxFiltersGroupPropsType> = (
     }
 
     const onClickShowAllButton = () => setShowAll(!showAll);
+
+    if (loading)  {
+        return <div className={className}>
+            <p className={'font-bold mb-3'}>{title}</p>
+
+            {
+                ...Array(limit).fill(0).map((_, i) => (
+                    <Skeleton key={i} className="h-6 mb-5 rounded-[8px]" />
+                ))
+            }
+        </div>
+
+    }
 
     return (
         <div className={className}>

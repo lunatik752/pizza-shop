@@ -10,6 +10,7 @@ type ProductCardPropsType = {
     price: number;
     imageUrl: string;
     className?: string;
+    ingredients?: any;
 }
 
 export const ProductCard: React.FC<ProductCardPropsType> = ({id, name, imageUrl, price, className}) => {
