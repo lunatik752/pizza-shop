@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 import Link from "next/link";
-import {Title} from "@/components/shared/Title";
-import {Button} from "@/components/ui";
-import {Plus} from "lucide-react";
+import { Title } from "@/components/shared/Title";
+import { Button } from "@/components/ui";
+import { Plus } from "lucide-react";
 
 type ProductCardPropsType = {
     id: number;
@@ -13,10 +13,10 @@ type ProductCardPropsType = {
     ingredients?: any;
 }
 
-export const ProductCard: React.FC<ProductCardPropsType> = ({id, name, imageUrl, price, className}) => {
+export const ProductCard: React.FC<ProductCardPropsType> = ({ name, imageUrl, price, className }) => {
     return (
         <div className={className}>
-            <Link href={'/product/1'}>
+            <Link href={"/product/1"}>
                 <div className="flex justify-center p-6 bg-secondary rounded-lg h-[260px]">
                     <img className="w-[215px] h-[215px]" src={imageUrl} alt={name}/>
                 </div>
