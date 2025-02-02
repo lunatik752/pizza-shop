@@ -101,6 +101,7 @@ export const Filters: React.FC<FiltersPropsType> = ({ className }) => {
                 loading={loading}
                 onClickCheckbox={onAddId}
                 values={selectedIds}
+                showSearchInput={true}
             />
         </div>
     );
