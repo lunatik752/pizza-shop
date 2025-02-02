@@ -11,13 +11,13 @@ export type FilterCheckboxPropsType = {
 }
 
 export const FilterCheckbox: React.FC<FilterCheckboxPropsType> = ({
-                                                                 text,
-                                                                 value,
-                                                                 endAdornment,
-                                                                 onCheckedChange,
-                                                                 checked,
-                                                                 name,
-                                                             }) => {
+    text,
+    value,
+    endAdornment,
+    onCheckedChange,
+    checked,
+    name,
+}) => {
     return (
         <div className="flex items-center space-x-2">
             <Checkbox

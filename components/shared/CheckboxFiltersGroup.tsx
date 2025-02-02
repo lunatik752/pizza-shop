@@ -2,12 +2,12 @@
 
 import React, {ChangeEvent, useState} from 'react';
 import {FilterCheckbox, FilterCheckboxPropsType} from "@/components/shared/FilterCheckbox";
-import { Input, Skeleton } from "@/components/ui";
+import { Skeleton } from "@/components/ui";
 
 type CheckboxFiltersGroupPropsType = {
     title: string
     items: FilterCheckboxPropsType[]
-    defaultItems: FilterCheckboxPropsType[]
+    defaultItems?: FilterCheckboxPropsType[]
     limit?: number
     searchInputPlaceholder?: string
     onClickCheckbox?: (id: string) => void
@@ -16,6 +16,7 @@ type CheckboxFiltersGroupPropsType = {
     selected?: Set<string>
     className?: string
     name?: string
+    values: Set<string>
 }
 
 export const CheckboxFiltersGroup: React.FC<CheckboxFiltersGroupPropsType> = (
@@ -24,23 +25,18 @@ export const CheckboxFiltersGroup: React.FC<CheckboxFiltersGroupPropsType> = (
         items,
         defaultItems,
         limit = 3,
-        searchInputPlaceholder = 'Поиск...',
         className,
         loading,
         onClickCheckbox,
-        selected,
+        values,
         name,
     }) => {
     const [showAll, setShowAll] = useState<boolean>(false);
     const [searchValue, setSearchValue] = useState<string>('');
 
     const showedItems = !showAll
-        ? defaultItems.slice(0, limit)
+        ? (defaultItems || items).slice(0, limit)
         : items.filter(item => item.text.toLowerCase().includes(searchValue.toLowerCase()));
-
-    const onChangeSearchInput = (e: ChangeEvent<HTMLInputElement>) => {
-        setSearchValue(e.target.value);
-    }
 
     const onClickShowAllButton = () => setShowAll(!showAll);
 
@@ -60,14 +56,6 @@ export const CheckboxFiltersGroup: React.FC<CheckboxFiltersGroupPropsType> = (
     return (
         <div className={className}>
             <p className={'font-bold mb-3'}>{title}</p>
-            <div className="mb-5">
-                <Input
-                    placeholder={searchInputPlaceholder}
-                    className="bg-gray-50 border-none"
-                    value={searchValue}
-                    onChange={onChangeSearchInput}
-                />
-            </div>
             <div className="flex flex-col gap-4 max-h-96 pr-2 overflow-auto scrollbar">
                 {
                     showedItems.map((item, index) => (
@@ -76,8 +64,8 @@ export const CheckboxFiltersGroup: React.FC<CheckboxFiltersGroupPropsType> = (
                             text={item.text}
                             value={item.value}
                             endAdornment={item.endAdornment}
-                            checked={false}
-                            onCheckedChange={(ids) => console.log(ids)}
+                            checked={values.has(item.value)}
+                            onCheckedChange={() => onClickCheckbox?.(item.value)}
                             name={name}
                         />
                     ))
